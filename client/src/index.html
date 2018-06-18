@@ -1,0 +1,125 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>Client</title>
+  <base href="/">
+
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="icon" type="image/x-icon" href="favicon.ico">
+
+  <!-- Incluimos jQuery -->
+  <script type="text/javascript" src="assets/fancytree/lib/jquery.js"></script>
+  <script type="text/javascript" src="assets/fancytree/lib/jquery-ui.custom.js"></script>
+  
+  <!-- Incluimos skin,librería Fancytree y extensiones -->
+  <link rel="stylesheet" href="assets/css/jquery-ui.custom/jquery-ui.css" />
+  <link rel="stylesheet" href="assets/fancytree/dist/skin-themeroller/ui.fancytree.css" />
+  <script type="text/javascript" src="assets/fancytree/dist/jquery.fancytree-all-deps.min.js"></script>
+
+  <script type="text/javascript" src="assets/fancytree/dist/modules/jquery.fancytree.edit.js"></script>
+  <script type="text/javascript" src="assets/fancytree/dist/modules/jquery.fancytree.dnd.js"></script>
+  <script type="text/javascript" src="assets/fancytree/dist/modules/jquery.fancytree.themeroller.js"></script>
+
+  <!-- Incluimos tinymce -->
+  <script type="text/javascript" src="assets/tinymce/tinymce.min.js"></script>
+
+  <!-- Incluimos bootstrap -->
+  <link rel="stylesheet" href="assets/bootstrap/css/bootstrap.min.css" />
+  <script type="text/javascript" src="assets/bootstrap/js/bootstrap.min.js"></script>
+
+  <!-- Incluismo CSS propio -->
+  <link rel="stylesheet" href="assets/css/styles.css" />
+
+  <script>
+		tinymce.init({
+      selector: "#tinymce",
+      height: 300,
+			plugins: 'code image imagetools link',
+			toolbar: 'undo redo | styleselect bold italic | alignleft aligncenter alignright | outdent indent | image | link | code',
+			language: 'es',
+      branding: false,
+      save_enablewhendirty: true
+			//save_onsavecallback: function () { alert('Saved'); }
+		});
+  </script>
+
+	<!-- Initialize the tree when page is loaded -->
+	<script>
+		$(function () {  // on page load
+			// Create the tree inside the <div id="tree"> element.
+			$("#tree").fancytree({
+        extensions: ["dnd", "edit", "themeroller"],
+        dnd: {
+          // Opciones disponibles con su valor por defecto:
+          autoExpandMS: 1000,   // Expand nodes after n milliseconds of hovering
+          draggable: null,      // Additional options passed to jQuery UI draggable
+          droppable: null,      // Additional options passed to jQuery UI droppable
+          dropMarkerOffsetX: -24,  // absolute position offset for .fancytree-drop-marker
+                                  // relatively to ..fancytree-title (icon/img near a node accepting drop)
+          dropMarkerInsertOffsetX: -16, // additional offset for drop-marker with hitMode = "before"/"after"
+          focusOnClick: true,  // Focus, although draggable cancels mousedown event (#270)
+          preventRecursiveMoves: true, // Prevent dropping nodes on own descendants
+          preventVoidMoves: true,      // Prevent dropping nodes 'before self', etc.
+          smartRevert: true,    // set draggable.revert = true if drop was rejected
+
+          // Events that make tree nodes draggable
+          dragStart: function(node, data) {
+            return true;      // Callback(sourceNode, data), return true to enable dnd
+          },  
+          dragStop: null,       // Callback(sourceNode, data)
+          initHelper: null,     // Callback(sourceNode, data)
+          updateHelper: null,   // Callback(sourceNode, data)
+
+          // Events that make tree nodes accept draggables
+          dragEnter: function(node, data) {
+            return true;      // Callback(targetNode, data)
+          },
+          dragExpand: null,     // Callback(targetNode, data), return false to prevent autoExpand
+          dragOver: null,       // Callback(targetNode, data)
+          dragDrop: null,       // Callback(targetNode, data)
+          dragLeave: null       // Callback(targetNode, data)
+        },
+        edit: {
+          // Opciones disponibles con su valor por defecto:
+          adjustWidthOfs: 4,   // null: don't adjust input size to content
+          inputCss: { minWidth: "3em" },
+          triggerStart: ["clickActive", "f2", "dblclick", "shift+click", "mac+enter"],
+          beforeEdit: $.noop,   // Return false to prevent edit mode
+          edit: $.noop,         // Editor was opened (available as data.input)
+          beforeClose: $.noop,  // Return false to prevent cancel/save (data.input is available)
+          save: $.noop,         // Save data.input.val() or return false to keep editor open
+          close: $.noop,        // Editor was removed
+        },
+        themeroller: {
+          activeClass: "ui-state-active",      // Class added to active node
+          addClass: "ui-corner-all",           // Class added to all nodes
+          focusClass: "ui-state-focus",        // Class added to focused node
+          hoverClass: "ui-state-hover",        // Class added to hovered node
+          selectedClass: "ui-state-highlight"  // Class added to selected nodes
+        },
+				source: []
+			});
+
+			// Note: Loading and initialization may be asynchronous, so the nodes may not be accessible yet.
+			$("#anyadirNodo").click(function () {
+        var rootNode = $("#tree").fancytree("getRootNode");
+				rootNode.addChildren({
+					title: "Nuevo nodo"
+				});
+			});
+
+      $("#anyadirHijo").click(function () {
+        var node = $("#tree").fancytree("getActiveNode");
+				node.addChildren({
+					title: "Nuevo hijo"
+				});
+			});
+		});
+	</script>
+
+</head>
+<body>
+  <app-root>Loading...</app-root>
+</body>
+</html>
