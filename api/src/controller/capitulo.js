@@ -20,7 +20,7 @@ function getCapitulos(req, res){
 
     //var find = Capitulo.find({});
 
-    res.status(200).send(Capitulo.find().sort('texto'));
+    res.status(200).send(Capitulo.find());
 
     /*
     var artistId = req.params.artist;

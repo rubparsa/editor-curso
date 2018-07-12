@@ -8,9 +8,8 @@
   <div id="tree">
   </div>
   <br>
-  <div id="tiny">
-    <textarea id="tinymce">
-    </textarea>
+  <div id="editor">
+    <textarea [(ngModel)]="capitulo.texto" name="texto" [froalaEditor]></textarea>
   </div>
   <br>
   <p>
@@ -18,3 +17,8 @@
   </p>
   <input type="submit" value="Guardar" class="btn btn-success" />
 </form>
+
+<!-- <textarea id="froala-editor"></textarea> 
+
+<div [froalaEditor]="editorContent">Hello, Froala!</div> 
+<textarea id="tinymce" #texto="ngModel" name="texto" [(ngModel)]="capitulo.texto"></textarea> -->

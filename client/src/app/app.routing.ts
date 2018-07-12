@@ -9,7 +9,7 @@ import { CapituloAddComponent } from './components/capitulo-add.component';
 const appRoutes: Routes = [
     {path: '', component: AppComponent},
     {path: 'crear-capitulo', component: CapituloAddComponent},
-    {path: '**', component: AppComponent} 
+    {path: '**', component: AppComponent}
 ];
 
 export const appRoutingProviders: any[] = [];

@@ -11,6 +11,10 @@
     "outDir": "../dist/out-tsc",
     "sourceMap": true,
     "target": "es5",
+    "types": [
+      "jquery",
+      "jquery.fancytree"
+    ],
     "typeRoots": [
       "../node_modules/@types"
     ]
