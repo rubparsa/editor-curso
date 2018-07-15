@@ -38,6 +38,10 @@ export class CapituloAddComponent implements OnInit {
 
   ngOnInit(){
       $('#tree').fancytree({
+
+        activate: function(event, data){
+          
+        },
         extensions: ["dnd", "edit", "themeroller"],
         dnd: {
           // Opciones disponibles con su valor por defecto:
@@ -62,11 +66,22 @@ export class CapituloAddComponent implements OnInit {
 
           // Events that make tree nodes accept draggables
           dragEnter: function(node, data) {
-            return true;      // Callback(targetNode, data)
+            if  (node.getLevel() > 1 ) {
+              // Don't allow dropping *over* a node (would create a child). Just
+              // allow changing the order:
+              return ["before", "after"];
+            }
+            // Accept everything:
+            return true;
           },
           dragExpand: null,     // Callback(targetNode, data), return false to prevent autoExpand
           dragOver: null,       // Callback(targetNode, data)
-          dragDrop: null,       // Callback(targetNode, data)
+          dragDrop: function(node, data) {
+            /** This function MUST be defined to enable dropping of items on
+             *  the tree.
+             */
+            data.otherNode.moveTo(node, data.hitMode);
+          },
           dragLeave: null       // Callback(targetNode, data)
         },
         edit: {
@@ -103,7 +118,9 @@ export class CapituloAddComponent implements OnInit {
         var node = $("#tree").fancytree("getActiveNode");
 				node.addChildren({
 					title: "Nuevo hijo"
-				});
+        });
+        
+        node.setExpanded();
 			});
     
     } //fin onInit
@@ -111,6 +128,11 @@ export class CapituloAddComponent implements OnInit {
   public onSubmit(){
 
     this._route.params.forEach((params: Params) => {
+
+      let node_prov = $("#tree").fancytree("getActiveNode");
+      let nombre_prov = node_prov.title;
+
+      this.capitulo.nombre = nombre_prov;
 
       //let texto_prov = document.getElementById('tinymce').innerHTML;
 
