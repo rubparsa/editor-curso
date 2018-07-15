@@ -1,9 +1,11 @@
+//import componentes básicos
 import { ModuleWithProviders } from '@angular/core';
 import { Router, RouterModule, Routes } from '@angular/router';
 
-//import 
+//import main
 import { AppComponent } from './app.component';
 
+//import componentes creados
 import { CapituloAddComponent } from './components/capitulo-add.component';
 
 const appRoutes: Routes = [

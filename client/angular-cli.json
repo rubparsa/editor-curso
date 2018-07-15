@@ -18,25 +18,12 @@
       "tsconfig": "tsconfig.json",
       "prefix": "app",
       "styles": [
-        "../src/styles.css",
-        "../src/assets/css/styles.css",
-        "../src/assets/css/jquery-ui.custom/jquery-ui.css",
-        "../src/assets/css/froala-editor/froala_editor.pkgd.min.css",
-        "../src/assets/css/froala-editor/froala_style.min.css",
         "../src/assets/css/font-awesome/css/font-awesome.min.css",
-        "../src/assets/fancytree/dist/skin-themeroller/ui.fancytree.css",
-        "../src/assets/bootstrap/css/bootstrap.min.css"
+        "../src/assets/css/froala-editor/froala_editor.pkgd.min.css",
+        "../src/assets/css/froala-editor/froala_style.min.css"
       ],
       "scripts": [
-        "../src/assets/fancytree/lib/jquery.js",
-        "../src/assets/fancytree/lib/jquery-ui.custom.js",
-        "../node_modules/jquery/dist/jquery.min.js",
-        "../node_modules/jquery.fancytree/dist/jquery.fancytree-all-deps.min.js",
-        "../node_modules/froala-editor/js/froala_editor.pkgd.min.js",
-        "../src/assets/fancytree/dist/modules/jquery.fancytree.edit.js",
-        "../src/assets/fancytree/dist/modules/jquery.fancytree.dnd.js",
-        "../src/assets/fancytree/dist/modules/jquery.fancytree.themeroller.js",
-        "../src/assets/bootstrap/js/bootstrap.min.js"
+        "../node_modules/froala-editor/js/froala_editor.pkgd.min.js"
       ],
       "environments": {
         "source": "environments/environment.ts",

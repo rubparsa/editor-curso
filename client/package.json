@@ -22,15 +22,15 @@
     "@angular/platform-browser-dynamic": "^5.2.11",
     "@angular/platform-server": "^5.2.11",
     "@angular/router": "^5.2.11",
-    "@tinymce/tinymce-angular": "^2.0.0",
     "@types/jquery.fancytree": "0.0.0",
     "angular-froala-wysiwyg": "^2.7.2",
+    "angular-tree-component": "^7.2.1",
     "core-js": "^2.4.1",
     "jquery": "^3.3.1",
     "jquery.fancytree": "^2.29.1",
     "rxjs": "^5.5.11",
     "ts-helpers": "^1.1.1",
-    "zone.js": "^0.7.2"
+    "zone.js": "^0.8.26"
   },
   "devDependencies": {
     "@angular/compiler-cli": "^5.2.11",

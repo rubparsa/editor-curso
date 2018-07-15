@@ -1,8 +1,10 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, ViewChild } from '@angular/core';
 import { Router, ActivatedRoute, Params } from '@angular/router';
 
 import { CapituloService } from '../services/capitulo.service';
 import { Capitulo } from '../model/capitulo';
+
+import { TreeComponent, TreeModule, TreeNode, TreeModel } from 'angular-tree-component';
 
 @Component({
   selector: 'capitulo-add',
@@ -13,6 +15,16 @@ export class CapituloAddComponent implements OnInit {
   public titulo: string;
   public capitulo: Capitulo;
   public alertMessage;
+  nodes = [];
+  options = {
+    allowDrag: true,
+    allowDrop: true
+  };
+
+  @ViewChild(TreeComponent)
+  private tree: TreeComponent;
+  private node: TreeNode;
+
   //@Input() tinymce: string;
 
   constructor(
@@ -89,11 +101,13 @@ export class CapituloAddComponent implements OnInit {
 
       $("#anyadirHijo").click(function () {
         var node = $("#tree").fancytree("getActiveNode");
-        node.addChildren({
-          title: "Nuevo hijo"
-        });
-      });
-  }
+				node.addChildren({
+					title: "Nuevo hijo"
+				});
+			});
+    
+    } //fin onInit
+
   public onSubmit(){
 
     this._route.params.forEach((params: Params) => {
@@ -119,4 +133,5 @@ export class CapituloAddComponent implements OnInit {
       );
     });
   }
+
 }
