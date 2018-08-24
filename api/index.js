@@ -17,3 +17,4 @@ mongoose.connect('mongodb://localhost:27017/PrototipoFinal', (err, res) => {
         })
     }
 });
+//mongoose.set('debug', true);

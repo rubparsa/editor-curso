@@ -22,4 +22,38 @@ export class CapituloService{
         return this._http.post(this.url+'capitulo', params, {headers: headers})
                          .map(res => res.json());
     }
+
+    updateCapitulo(id:string, contenido: Capitulo){
+        let params = JSON.stringify(contenido);
+        let headers = new Headers({
+            'Content-Type': 'application/json'
+        });
+
+        return this._http.put(this.url+'capitulo/'+id, params, {headers: headers})
+                         .map(res => res.json());
+    }
+
+    deleteCapitulo(id: string){
+        let headers = new Headers({
+            'Content-Type': 'application/json'
+        });
+
+        let options = new RequestOptions({headers:headers});
+
+        return this._http.delete(this.url+'capitulo/'+id, options)
+                         .map(res => res.json());
+    }
+
+    addEtiqueta(token, id:string, etiqueta: string){
+        //let params = etiqueta;
+        let headers = new Headers({
+            'Content-Type': 'application/json',
+            'Authorization': token
+        });
+
+        console.log(etiqueta);
+
+        return this._http.put(this.url+'etiqueta/'+id, {etiqueta: etiqueta}, {headers:headers})
+                         .map(res => res.json());
+    }
 }

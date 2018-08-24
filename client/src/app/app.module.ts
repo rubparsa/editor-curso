@@ -7,20 +7,19 @@ import { HttpModule } from '@angular/http';
 
 //import funcionalidades
 import { FroalaEditorModule, FroalaViewModule } from 'angular-froala-wysiwyg';
-import { TreeModule } from 'angular-tree-component';
-
-//import { EditorModule } from '@tinymce/tinymce-angular';
 
 import { routing, appRoutingProviders } from './app.routing';
-
 import { AppComponent } from './app.component';
 
 import { CapituloAddComponent } from './components/capitulo-add.component';
 
+import { HomeComponent } from './components/home.component';
+
 @NgModule({
   declarations: [
     AppComponent,
-    CapituloAddComponent
+    CapituloAddComponent,
+    HomeComponent
   ],
   imports: [
     BrowserModule,
@@ -29,8 +28,6 @@ import { CapituloAddComponent } from './components/capitulo-add.component';
     HttpClientModule,
     FroalaEditorModule.forRoot(),
     FroalaViewModule.forRoot(),
-    TreeModule,
-    //EditorModule,
     routing
   ],
   providers: [appRoutingProviders],

@@ -7,11 +7,12 @@ import { AppComponent } from './app.component';
 
 //import componentes creados
 import { CapituloAddComponent } from './components/capitulo-add.component';
+import { HomeComponent } from './components/home.component';
 
 const appRoutes: Routes = [
-    {path: '', component: AppComponent},
-    {path: 'crear-capitulo', component: CapituloAddComponent},
-    {path: '**', component: AppComponent}
+    {path: '', component: HomeComponent},
+    {path: 'crear-capitulo/:asignatura', component: CapituloAddComponent},
+    {path: '**', component: HomeComponent}
 ];
 
 export const appRoutingProviders: any[] = [];

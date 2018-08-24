@@ -1,0 +1,31 @@
+<div class="central col-lg-14">
+    <div id="info" class="jumbotron col-lg-14">
+        <h1>Bienvenido a UNED - Gestor de contenidos</h1>
+        <p>Empiece a crear y editar contenidos de sus asignaturas</p>
+        <p>
+            <a class="btn btn-primary btn-lg" [routerLink]="['/']" role="button">Inicio</a>
+            <a (click)="logout()" class="btn-logout">
+                <span class="glyphicon glyphicon-log-out" aria-hidden="true"></span>
+                Cerrar sesión
+            </a>
+        </p>
+    </div>
+    <div id="selector" class="col-lg-14">  
+        Seleccione un tipo de estudio: <select [(ngModel)]="tipoEstudio" (ngModelChange)="updateTipoEstudioSelected($event)" id="tipoEstudio">
+            <option value="" disabled selected></option>
+            <option *ngFor="let tipoEst of arrayTipoEstudio" [value]="tipoEst._id">{{tipoEst.nombre}}</option>
+        </select>
+        <br><br>
+        Seleccione un estudio: <select [(ngModel)]="estudio" (ngModelChange)="updateEstudioSelected($event)" id="estudio">
+            <option value="" disabled selected></option>
+            <option *ngFor="let est of arrayEstudios" [ngValue]="est._id">{{est.nombre}}</option>
+        </select>
+        <br><br>
+        Seleccione una asignatura: <select [(ngModel)]="asignatura" (ngModelChange)="this.asignaturaSelected = $event" id="asignatura">
+            <option value="" disabled selected></option>
+            <option *ngFor="let asig of arrayAsignaturas" [ngValue]="asig.codigo">{{asig.nombre}}</option>
+        </select>
+        <br><br>
+        <a class="btn btn-primary btn-lg" [routerLink]="['/crear-capitulo/', this.asignaturaSelected]" role="button">Ir</a>
+    </div>
+</div>

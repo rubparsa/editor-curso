@@ -4,12 +4,13 @@ var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
 
 var CapituloSchema = Schema({
-        nombre: String,
+        title: String,
         texto: String,
-        etiquetas: String,
-        asignatura: String,
-        //asignatura: { type: Schema.ObjectId, ref: 'Asignatura'},
-        orden: Number
+        etiquetas: Array,
+        asignatura: { type: Number, ref: 'Asignatura'},
+        parent: { type: String, ref: 'Capitulo'},
+        children: Array,
+        key: Number
 });
 
 module.exports = mongoose.model('Capitulo', CapituloSchema);

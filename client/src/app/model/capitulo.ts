@@ -1,9 +1,12 @@
 export class Capitulo{
     constructor(
-       public nombre: string,
+       public _id: string, 
+       public title: string,
        public texto: string,
-       public etiquetas: string,
+       public etiquetas: string[],
        public asignatura: string,
-       public orden: number
+       public parent: string,
+       public children: string[],
+       public key: number
     ){}
 }

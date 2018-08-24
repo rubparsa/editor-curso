@@ -2,23 +2,30 @@
 <p id="tools">
   <button id="anyadirNodo" type="button" class="btn btn-primary">Añadir nodo</button>
   <button id="anyadirHijo" type="button" class="btn btn-primary">Añadir hijo</button>
+  <button (click)="eliminarNodo()" id="eliminarNodo" type="button" class="btn btn-primary">Eliminar nodo</button>
+  <button id="eliminarHijos" type="button" class="btn btn-primary">Eliminar hijos</button>
 </p>
 <!-- Define the targel element for the tree -->
-<form #formAlbum="ngForm" (ngSubmit)="onSubmit()" class="col-md-8">
-  <div id="tree">
+<form id="formulario" #formAlbum="ngForm" (ngSubmit)="onSubmit()" class="col-lg-12">
+  <div id="todoForm" class="row form-group">
+    <div id="tree" class="col-lg-2">
+    </div>
+    <div id="restoForm" class="col-lg-10">
+      <div id="editor">
+        <textarea [(ngModel)]="capitulo.texto" #texto="ngModel" id="texto" name="texto" [froalaEditor] [(froalaModel)]="capitulo.texto">{{capitulo.texto}}</textarea>
+      </div>
+      <br>
+      <p>
+        <input type="text" name="etiqueta" #etiqueta class="form-control"> <button (click)="anyadirEtiqueta(etiqueta.value)" id="anyadirEtiqueta" type="button" class="btn btn-success">Añadir etiqueta</button>
+        {{capitulo.etiquetas}}
+        <!-- <input type="text" #etiquetas="ngModel" name="etiquetas" [(ngModel)]="capitulo.etiquetas" class="form-control"> {{capitulo.etiquetas}} -->
+      </p>
+      <div *ngIf="alertMessage">
+        <div class="alert alert-info">
+        {{alertMessage}}
+        </div>
+      </div>
+      <input type="submit" value="Guardar" id="Guardar" class="btn btn-success" />
+    </div>
   </div>
-  <br>
-  <div id="editor">
-    <textarea [(ngModel)]="capitulo.texto" name="texto" [froalaEditor]>{{capitulo.texto}}</textarea>
-  </div>
-  <br>
-  <p>
-    <input type="text" #etiquetas="ngModel" name="etiquetas" [(ngModel)]="capitulo.etiquetas" class="form-control">
-  </p>
-  <input type="submit" value="Guardar" class="btn btn-success" />
 </form>
-
-<!-- <textarea id="froala-editor"></textarea> 
-
-<div [froalaEditor]="editorContent">Hello, Froala!</div> 
-<textarea id="tinymce" #texto="ngModel" name="texto" [(ngModel)]="capitulo.texto"></textarea> -->

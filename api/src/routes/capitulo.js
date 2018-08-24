@@ -4,15 +4,18 @@ var express = require('express');
 var CapituloController = require('../controller/capitulo.js');
 
 var api = express.Router();
-//var md_auth = require('../middlewares/authenticated');
+var md_auth = require('../middlewares/authenticated');
 
 //var multipart = require('connect-multiparty');
 //var md_upload = multipart({ uploadDir: './uploads/users' });
 
 //api.get('/probando', CapituloController.pruebas);
-api.get('/capitulos', CapituloController.getCapitulos);
+api.get('/capitulos/:asignatura?', CapituloController.getCapitulos);
+//api.get('capitulos/:asignatura', CapituloController.getCapitulosAsignatura);
 api.post('/capitulo', CapituloController.addCapitulo);
-//api.put('/capitulo/:id', CapituloController.updateCapitulo);
+api.put('/capitulo/:id', CapituloController.updateCapitulo);
+api.delete('/capitulo/:id', CapituloController.deleteCapitulo);
+api.put('/etiqueta/:id', md_auth.ensureAuth, CapituloController.addEtiqueta);
 //api.post('/login', UserController.loginUser);
 //api.put('/update-user/:id', md_auth.ensureAuth, UserController.updateUser);
 //api.post('/upload-image-user/:id', [md_auth.ensureAuth, md_upload], UserController.uploadImage);

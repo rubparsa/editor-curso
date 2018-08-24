@@ -5,62 +5,48 @@ var path = require('path');
 //var mongoosePaginate = require('mongoose-pagination');
 
 var Capitulo = require('../model/capitulo');
-
-/*
-function pruebas(req, res){
-    
-    res.status(200).send({
-        message: 'Probando una accion del controlador de usuarios del api rest con Node y Mongo'
-    });
-    
-}
-*/
+var Asignatura = require('../model/asignatura');
 
 function getCapitulos(req, res){
 
-    //var find = Capitulo.find({});
+    var asignaturaId = req.params.asignatura;
 
-    res.status(200).send(Capitulo.find());
-
-    /*
-    var artistId = req.params.artist;
-
-    if(!artistId){
-        //Sacar todos los álbums de la BBDD
-        var find = Album.find({}).sort('title');
+    if(!asignaturaId){
+        //Sacar todos los capitulos de la BBDD
+        var find = Capitulo.find({});
     }
     else{
-        //Sacar los álbums del artista seleccionado
-        var find = Album.find({artist: artistId}).sort('year');
+        //Sacar los capitulos de la asignatura seleccionada
+        var find = Capitulo.find({asignatura: asignaturaId});
     }
 
-    find.populate({path: 'artist'}).exec((err, albums) => {
+    find.exec((err, capitulos) => {
         if(err){
             res.status(500).send({message: 'Error en la petición'});
         }
         else{
-            if(!albums){
-                res.status(404).send({message: 'No hay álbums'});
+            if(!capitulos){
+                res.status(404).send({message: 'No hay capítulos'});
             }
             else{
-                res.status(200).send({albums});
+                return res.status(200).send({capitulos});
             }
         }
-    });*/
+    });
 }
 
 function addCapitulo(req, res){
-    
     var capitulo = new Capitulo();
-
-    console.log(req.body);
-
     var params = req.body;
-    capitulo.nombre = 'nombre';
+    capitulo.title = params.title;
     capitulo.texto = params.texto;
-    capitulo.etiquetas = params.etiquetas;
-    capitulo.asignatura = 'null';
-    capitulo.orden = 1;
+    capitulo.etiquetas = params.etiqueta;
+    capitulo.asignatura = params.asignatura;
+    capitulo.parent = params.parent;
+    capitulo.children = [];
+    capitulo.key = 1;
+
+    console.log(capitulo.etiquetas);
 
     capitulo.save((err, capituloStored) => {
         if(err){
@@ -75,10 +61,92 @@ function addCapitulo(req, res){
             }
         }
     });
-    
 }
- 
+
+function updateCapitulo(req, res){
+    var capituloId = req.params.id;
+    var update = req.body;
+
+    Capitulo.findByIdAndUpdate(capituloId, update, (err, capituloUpdated) => {
+        if(err){
+            res.status(500).send({message: 'Error en el servidor'});
+        }
+        else{
+            if(!capituloUpdated){
+                res.status(404).send({message: 'No se ha actualizado el capítulo'});
+            }
+            else{
+                res.status(200).send({capitulo: capituloUpdated});
+            }
+        }
+    });
+}
+
+function deleteCapitulo(req, res){
+    var capituloId = req.params.id;
+
+    Capitulo.findByIdAndRemove(capituloId, (err, capituloRemoved) => {
+        if(err){
+            res.status(500).send({message: 'Error al eliminar el capítulo'});
+        }
+        else{
+            if(!capituloRemoved){
+                res.status(404).send({message: 'El capítulo no ha sido eliminado'});
+            }
+            else{
+
+            Capitulo.find({parent:capituloRemoved._id}).remove((err, contenidoHijoRemoved) =>{
+                if(err){
+                    res.status(500).send({message: 'Error al eliminar el/los hijo/s'});
+                }
+                else{
+                    if(!contenidoHijoRemoved){
+                        res.status(404).send({message: 'El/Los hijo/s no ha/n sido eliminado/s'});
+                    }
+                    else{
+                        res.status(200).send({capitulo: capituloRemoved});
+                    }
+                }
+            }); 
+            }
+        }   
+    });
+}
+
+function addEtiqueta(req, res){
+    var capituloId = req.params.id;
+    var nuevaEtiqueta = req.body.etiqueta;
+
+    /*
+    //var params = req.body;
+    const util = require('util');
+    console.log("Req: " + util.inspect(req, false, null));
+    console.log("Req Body: " + util.inspect(req.body, false, null));
+    console.log("Body Etiq: " + req.body.etiqueta);
+    console.log("Etiq: " + req.etiqueta);
+    console.log("ReqEtiq: " + req.params.etiqueta);
+    */
+
+    Capitulo.findByIdAndUpdate(capituloId, {$push: {etiquetas: nuevaEtiqueta}}, {new: true}, (err, capituloUpdated) => {
+        if(err){
+            res.status(500).send({message: 'Error al añadir la etiqueta'});
+        }
+        else{
+            if(!capituloUpdated){
+                res.status(404).send({message: 'No se ha añadido la etiqueta'});
+            }
+            else{
+                //res.status(200);
+                res.status(200).send({capitulo: capituloUpdated});
+            }
+        }
+    });
+}
+
 module.exports = {
     getCapitulos,
-    addCapitulo
+    addCapitulo,
+    updateCapitulo,
+    deleteCapitulo,
+    addEtiqueta
 }

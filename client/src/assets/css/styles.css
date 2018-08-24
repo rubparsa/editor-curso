@@ -1,3 +1,89 @@
-body{
+/* GLOBAL */
+
+html, body{
+    margin: 0px;
+    height: 100%;
     background: #eee;
+}
+
+.actived{
+    border-bottom: 4px solid #84BD00;
+    padding-bottom: 4px;
+}
+
+.central{
+    height: 100%;
+    /*overflow-y: scroll;*/
+}
+
+/* BARRA LATERAL */
+
+#topmenu{
+    color: white;
+    background: #1C1C1F;
+}
+
+.head-title{
+    font-size: 20px;
+    font-weight: bold;
+    text-transform: uppercase;
+    margin-bottom: 25px;
+    display: block;
+}
+
+.head-title a{
+    color: #ddd;
+    text-decoration: none;
+}
+
+.head-title a:hover{
+    color: white;
+}
+
+#navigation{
+    text-align: center;
+    color: white;
+    background: #1C1C1F;
+    height: 100%;
+}
+
+#navigation a{
+    color: #ddd;
+    margin-top: 20px;
+    margin-bottom: 20px;
+    display: block;
+    text-decoration: none;
+}
+
+#navigation a:hover{
+    color: white;
+}
+
+#navigation .glyphicon{
+    font-size: 25px;
+    display: block;
+    width: 100%;
+}
+
+#user_logged{
+    color: white;
+    text-align: right;
+    background: #1C1C1F;
+    bottom: 0px;
+    /*border-top: 1px solid #444;*/
+    width: 75%;
+    height: 100%;
+}
+
+#user_logged a{
+    color: #ddd;
+    text-decoration: none;
+}
+
+#user_logged a:hover{
+    color: white;
+}
+
+.btn-logout{
+    cursor: pointer;
 }
