@@ -1,7 +1,10 @@
 export class Asignatura{
     constructor(
-       public codigo: number,
+       public _id: string, 
+       public codigo: string,
        public nombre: string,
+       public texto: string,
+       public etiquetas: string[],
        public tipoEstudio: string,
        public estudio: string,
        public anyoCurso: number,

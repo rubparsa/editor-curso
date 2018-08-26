@@ -3,6 +3,8 @@ import { Router, ActivatedRoute, Params } from '@angular/router';
 
 import { Asignatura } from '../model/asignatura';
 import { AsignaturaService } from '../services/asignatura.service';
+import { AsigProfesor } from '../model/asigProfesor';
+import { AsigProfesorService } from '../services/asigProfesor.service';
 import { GLOBAL } from '../services/global';
 import { UsuarioService } from '../services/usuario.service';
 import { tipoEstudio } from '../model/tipoEstudio';
@@ -13,7 +15,7 @@ import { EstudioService } from '../services/estudio.service';
 @Component ({
     selector: 'home',
     templateUrl: '../view/home.html',
-    providers: [AsignaturaService, UsuarioService, tipoEstudioService, EstudioService]
+    providers: [AsignaturaService, AsigProfesorService, UsuarioService, tipoEstudioService, EstudioService]
 })
 
 export class HomeComponent implements OnInit{
@@ -33,6 +35,7 @@ export class HomeComponent implements OnInit{
         private _route: ActivatedRoute,
         private _router: Router,
         private _asignaturaService: AsignaturaService,
+        private _asigProfesorService: AsigProfesorService,
         private _usuarioService: UsuarioService,
         private _tipoEstudioService: tipoEstudioService,
         private _estudioService: EstudioService
@@ -45,10 +48,12 @@ export class HomeComponent implements OnInit{
 
     ngOnInit(){
 
-        this.getTipoEstudio();
-        //this.getEstudios();
-        //this.getAsignaturas();
-
+        if(this.identidad.rol == 'admin'){
+            this.getTipoEstudio();
+        }
+        else if(this.identidad.rol == 'profesor') {
+            this.getAsignaturasProfesor();
+        }
     }
 
     logout(){
@@ -141,6 +146,29 @@ export class HomeComponent implements OnInit{
     updateEstudioSelected($event){
         this.estudioSelected = $event;
         this.getAsignaturas();
+    }
+
+    getAsignaturasProfesor(){
+        this._asigProfesorService.getAsignaturasProfesor(this.token, this.identidad._id).subscribe(
+            response => {
+                if(!response.asignaturasProfesor){
+                    this.arrayAsignaturas = null;
+                }
+                else{
+                    this.arrayAsignaturas = response.asignaturasProfesor;
+                    console.log(this.arrayAsignaturas);
+                }
+            },
+            error => {
+                var errorMessage = <any>error;
+
+                if(errorMessage != null){
+                    var body = JSON.parse(error._body);
+                    this.alertMessage = body.message;
+                    console.log(error);
+                }
+            }
+        )
     }
 
 }

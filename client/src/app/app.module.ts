@@ -11,6 +11,8 @@ import { FroalaEditorModule, FroalaViewModule } from 'angular-froala-wysiwyg';
 import { routing, appRoutingProviders } from './app.routing';
 import { AppComponent } from './app.component';
 
+import { AsignaturaEditComponent } from './components/asignatura-edit.component';
+
 import { CapituloAddComponent } from './components/capitulo-add.component';
 
 import { HomeComponent } from './components/home.component';
@@ -18,8 +20,9 @@ import { HomeComponent } from './components/home.component';
 @NgModule({
   declarations: [
     AppComponent,
-    CapituloAddComponent,
-    HomeComponent
+    HomeComponent,
+    AsignaturaEditComponent,
+    CapituloAddComponent
   ],
   imports: [
     BrowserModule,

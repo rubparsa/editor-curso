@@ -40,13 +40,13 @@ function addCapitulo(req, res){
     var params = req.body;
     capitulo.title = params.title;
     capitulo.texto = params.texto;
-    capitulo.etiquetas = params.etiqueta;
+    capitulo.etiquetas = params.etiquetas;
     capitulo.asignatura = params.asignatura;
     capitulo.parent = params.parent;
     capitulo.children = [];
     capitulo.key = 1;
 
-    console.log(capitulo.etiquetas);
+    //console.log(capitulo.etiquetas);
 
     capitulo.save((err, capituloStored) => {
         if(err){

@@ -9,6 +9,7 @@ var app = express();
 
 var capitulo_routes = require('./src/routes/capitulo');
 var asignatura_routes = require('./src/routes/asignatura');
+var asigProfesor_routes = require('./src/routes/asigProfesor');
 var usuario_routes = require('./src/routes/usuario');
 var estudio_routes = require('./src/routes/estudio');
 var tipoEstudio_routes = require('./src/routes/tipoEstudio');
@@ -34,6 +35,7 @@ app.use((req, res, next) => {
 
 app.use('/api', capitulo_routes);
 app.use('/api', asignatura_routes);
+app.use('/api', asigProfesor_routes);
 app.use('/api', usuario_routes);
 app.use('/api', estudio_routes);
 app.use('/api', tipoEstudio_routes);

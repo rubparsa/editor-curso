@@ -13,6 +13,18 @@ export class AsignaturaService{
         this.url = GLOBAL.url;
     }
 
+    getAsignatura(token, asignaturaId){
+        let headers = new Headers({
+            'Content-Type': 'application/json',
+            'Authorization': token
+        });
+
+        let options = new RequestOptions({headers:headers});
+
+        return this._http.get(this.url+'asignatura/'+asignaturaId, options)
+                         .map(res => res.json());
+    }
+
     getAsignaturas(token, estudioId = null){
         let headers = new Headers({
             'Content-Type': 'application/json',
@@ -30,4 +42,15 @@ export class AsignaturaService{
             .map(res => res.json());
         }
     }
+
+    addEtiqueta(token, id:string, etiqueta: string){
+        let headers = new Headers({
+            'Content-Type': 'application/json',
+            'Authorization': token
+        });
+
+        return this._http.put(this.url+'etiquetaAsignatura/'+id, {etiqueta: etiqueta}, {headers:headers})
+                         .map(res => res.json());
+    }
+
 }

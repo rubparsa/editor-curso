@@ -1,0 +1,21 @@
+<h1>{{titulo}} {{this.asignatura.nombre}}</h1>
+<form id="formulario" #formAlbum="ngForm" (ngSubmit)="onSubmit(etiqueta.value)" class="col-lg-12">
+    <div id="todoForm" class="row form-group">
+        <div id="restoForm" class="col-lg-10">
+            <div id="editor">
+              <textarea [(ngModel)]="asignatura.texto" #texto="ngModel" id="texto" name="texto" [froalaEditor] [(froalaModel)]="asignatura.texto">{{asignatura.texto}}</textarea>
+            </div>
+            <br>
+            <p>
+              <input type="text" id="etiqueta" name="etiqueta" #etiqueta class="form-control"> <button (click)="anyadirEtiqueta(etiqueta.value)" id="anyadirEtiqueta" type="button" class="btn btn-success">Añadir etiqueta</button>
+              {{asignatura.etiquetas}}
+            </p>
+            <div *ngIf="alertMessage">
+              <div class="alert alert-info">
+              {{alertMessage}}
+              </div>
+            </div>
+            <input type="submit" value="Guardar" id="Guardar" class="btn btn-success" />
+        </div>
+    </div>
+</form>

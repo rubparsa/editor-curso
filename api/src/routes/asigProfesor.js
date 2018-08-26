@@ -1,19 +1,16 @@
 'use strict'
 
 var express = require('express');
-var AsignaturaController = require('../controller/asignatura.js');
+var AsigProfesorController = require('../controller/asigProfesor.js');
 
 var api = express.Router();
-var md_auth = require('../middlewares/authenticated.js');
+var md_auth = require('../middlewares/authenticated');
 
 //var multipart = require('connect-multiparty');
 //var md_upload = multipart({ uploadDir: './uploads/users' });
 
 //api.get('/probando', CapituloController.pruebas);
-api.get('/asignatura/:id', md_auth.ensureAuth, AsignaturaController.getAsignatura);
-api.get('/asignaturas/:estudio?', AsignaturaController.getAsignaturas);
-api.put('/etiquetaAsignatura/:id', md_auth.ensureAuth, AsignaturaController.addEtiqueta);
-//api.get('/asignaturasProfesor/:profesorId', md_auth.ensureAuth, AsignaturaController.getAsignaturasProfesor);
+api.get('/asigProfesor/:profesorId', md_auth.ensureAuth, AsigProfesorController.getAsignaturasProfesor);
 //api.post('/capitulo', CapituloController.addCapitulo);
 //api.put('/capitulo/:id', CapituloController.updateCapitulo);
 //api.post('/login', UserController.loginUser);

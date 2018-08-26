@@ -1,9 +1,11 @@
 import { Component, OnInit, NgModule, NgZone, Renderer2, ElementRef } from '@angular/core';
 import { Router, ActivatedRoute, Params } from '@angular/router';
+import { NgForm } from '@angular/forms';
 
+import { AsignaturaService } from '../services/asignatura.service';
+import { Asignatura } from '../model/asignatura';
 import { CapituloService } from '../services/capitulo.service';
 import { Capitulo } from "../model/capitulo";
-import { Asignatura } from '../model/asignatura';
 import { UsuarioService } from '../services/usuario.service';
 
 import { GLOBAL } from '../services/global';
@@ -14,13 +16,14 @@ declare function reloadFT(): any;
 @Component({
   selector: 'capitulo-add',
   templateUrl: '../view/capitulo-add.html',
-  providers: [CapituloService, UsuarioService]
+  providers: [AsignaturaService, CapituloService, UsuarioService]
 })
 export class CapituloAddComponent implements OnInit {
   public titulo: string;
   public capitulo: Capitulo;
   public alertMessage;
   public asignatura_id: string;
+  public nombreAsignatura: string;
   public tempIdCapitulo: string;
   public identidad;
   public token;
@@ -35,17 +38,20 @@ export class CapituloAddComponent implements OnInit {
     private _router: Router,
     private _capituloService: CapituloService,
     private _usuarioService: UsuarioService,
+    private _asignaturaService: AsignaturaService,
     //private renderer2: Renderer2,
     //private elementRef: ElementRef,
     private zone: NgZone
   ){
-    this.titulo = 'Gestor de contenido';
+    
     this.capitulo = new Capitulo('','','',[],'','', [], 2);
     this.asignatura_id = this._route.snapshot.paramMap.get('asignatura');
     this.identidad = this._usuarioService.getIdentidad();
     this.token = this._usuarioService.getToken();
-    //console.log(this.token);
-
+    console.log(this.token);
+    //this.nombreAsignatura = String(this._asignaturaService.getNombreAsignatura(this.token, this.asignatura_id));
+    this.titulo = 'Gestor de contenido';
+    //console.log(this._asignaturaService.getNombreAsignatura(this.token, this.asignatura_id));
     //const componente = this;
   }
 
@@ -54,7 +60,7 @@ export class CapituloAddComponent implements OnInit {
     $('#tree').fancytree({
 
       activate: function(event, data){
-        this.alertMessage = false;
+        this.alertMessage = '';
         this.capitulo = data.node.data;
         this.capitulo.texto = data.node.data.texto;
         this.capitulo.etiquetas = data.node.data.etiquetas;
@@ -151,19 +157,16 @@ export class CapituloAddComponent implements OnInit {
       // Set checkbox for completed tasks
       //c.selected = (c.status === "completed");
       // Check if c is a child node
-      console.log(c);
+
       if(c.parent){
           // add c to `children` array of parent node
-          //console.log(nodeMap);
-          //console.log(nodeList);
+
           parent = nodeMap[c.parent];
-          console.log("Dentro de parent: " + c);
+          
           if(nodeMap[c.parent].children) {
-            console.log("Entra en if");
             nodeMap[c.parent].children.push(c);
           }
           else {
-            console.log("Entra en else");
             nodeMap[c.parent].children = [c];
           }
           return null;  // Remove c from nodeList
@@ -231,16 +234,24 @@ export class CapituloAddComponent implements OnInit {
 
   } //fin onInit
 
-  public onSubmit(){
+  public onSubmit(etiqueta){
     
     this._route.params.forEach((params: Params) => {
+
 
       let node_prov = $("#tree").fancytree("getActiveNode");
       let nombre_prov = node_prov.title;
       this.capitulo.title = nombre_prov;
       this.capitulo.asignatura = this.asignatura_id;
       this.capitulo._id = node_prov.data._id;
-      if (node_prov.getLevel() == 2){
+      if(this.capitulo.etiquetas){
+        this.capitulo.etiquetas.push(etiqueta);
+      }
+      else{
+        this.capitulo.etiquetas = etiqueta;
+      }
+
+      if(node_prov.getLevel() == 2){
         this.capitulo.parent = node_prov.getParent().data._id;
       }
       else{

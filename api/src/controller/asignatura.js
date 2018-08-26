@@ -7,6 +7,25 @@ var path = require('path');
 var Asignatura = require('../model/asignatura');
 var Estudio = require('../model/estudio');
 
+function getAsignatura(req, res){
+    
+    var asignaturaId = req.params.id;
+
+    Asignatura.find({codigo: asignaturaId}).exec((err, asignatura) => {
+        if(err){
+            res.status(500).send({message: 'Error en la petición'});
+        }
+        else{
+            if(!asignatura){
+                res.status(404).send({message: 'Asignatura sin nombre o ID de asignatura no encontrado'});
+            }
+            else{
+                res.status(200).send({asignatura});
+            }
+        }
+    });
+}
+
 function getAsignaturas(req, res){
 
     var estudioId = req.params.estudio;
@@ -35,6 +54,27 @@ function getAsignaturas(req, res){
     });
 }
 
+function addEtiqueta(req, res){
+    var asignaturaId = req.params.id;
+    var nuevaEtiqueta = req.body.etiqueta;
+
+    Asignatura.findByIdAndUpdate(asignaturaId, {$push: {etiquetas: nuevaEtiqueta}}, {new: true}, (err, asignaturaUpdated) => {
+        if(err){
+            res.status(500).send({message: 'Error al añadir la etiqueta'});
+        }
+        else{
+            if(!asignaturaUpdated){
+                res.status(404).send({message: 'No se ha añadido la etiqueta'});
+            }
+            else{
+                res.status(200).send({asignatura: asignaturaUpdated});
+            }
+        }
+    });
+}
+
 module.exports = {
-    getAsignaturas
+    getAsignatura,
+    getAsignaturas,
+    addEtiqueta
 }

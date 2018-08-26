@@ -10,7 +10,7 @@
             </a>
         </p>
     </div>
-    <div id="selector" class="col-lg-14">  
+    <div *ngIf="identidad.rol == 'admin'" id="selector" class="col-lg-14">  
         Seleccione un tipo de estudio: <select [(ngModel)]="tipoEstudio" (ngModelChange)="updateTipoEstudioSelected($event)" id="tipoEstudio">
             <option value="" disabled selected></option>
             <option *ngFor="let tipoEst of arrayTipoEstudio" [value]="tipoEst._id">{{tipoEst.nombre}}</option>
@@ -26,6 +26,26 @@
             <option *ngFor="let asig of arrayAsignaturas" [ngValue]="asig.codigo">{{asig.nombre}}</option>
         </select>
         <br><br>
-        <a class="btn btn-primary btn-lg" [routerLink]="['/crear-capitulo/', this.asignaturaSelected]" role="button">Ir</a>
+        <a class="btn btn-primary btn-lg" [routerLink]="['/crear-capitulo/', this.asignaturaSelected]" role="button">
+            Ir
+        </a>
+    </div>
+
+    <div *ngIf="identidad.rol == 'profesor'" id="selector" class="col-lg-14">
+        <ul class="listaAsignaturas">
+            <li *ngFor="let asig of arrayAsignaturas" class="itemAsignatura">
+                <p>
+                    {{asig.asignatura.estudio.nombre}}
+                    <br>
+                    {{asig.asignatura.nombre}}
+                    <a class="btn btn-primary btn-sm" [routerLink]="['/editar-asignatura/', asig.asignatura.codigo]" role="button">
+                        Ir a asignatura
+                    </a>
+                    <a class="btn btn-primary btn-sm" [routerLink]="['/crear-capitulo/', asig.asignatura.codigo]" role="button">
+                        Ir a contenido
+                    </a>
+                </p>
+            </li>
+        </ul>
     </div>
 </div>

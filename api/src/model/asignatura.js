@@ -6,9 +6,9 @@ var Schema = mongoose.Schema;
 var AsignaturaSchema = Schema({
         codigo: Number,
         nombre: String,
-        //tipoEstudio: String,
+        texto: String,
+        etiquetas: Array,
         tipoEstudio: { type: Schema.ObjectId, ref: 'TipoEstudio'},
-        //estudio: String,
         estudio: { type: Schema.ObjectId, ref: 'Estudio'},
         anyoCurso: Number,
         creditos: Number,
