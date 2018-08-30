@@ -85,6 +85,7 @@ function loginUsuario(req, res){
     })
 }
 
+/*
 function actualizarUsuario(req, res){
     var usuarioId = req.params.id;
     var update = req.body;
@@ -107,9 +108,9 @@ function actualizarUsuario(req, res){
         }
     });
 }
+*/
 
 module.exports = {
     guardarUsuario,
-    loginUsuario,
-    actualizarUsuario
+    loginUsuario
 };

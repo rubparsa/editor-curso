@@ -4,13 +4,13 @@ var express = require('express');
 var tipoEstudioController = require('../controller/tipoEstudio.js');
 
 var api = express.Router();
-//var md_auth = require('../middlewares/authenticated');
+var md_auth = require('../middlewares/authenticated');
 
 //var multipart = require('connect-multiparty');
 //var md_upload = multipart({ uploadDir: './uploads/users' });
 
 //api.get('/probando', CapituloController.pruebas);
-api.get('/tipoEstudio/', tipoEstudioController.getTipoEstudio);
+api.get('/tipoEstudio/', md_auth.ensureAuth, tipoEstudioController.getTipoEstudio);
 //api.post('/capitulo', CapituloController.addCapitulo);
 //api.put('/capitulo/:id', CapituloController.updateCapitulo);
 //api.post('/login', UserController.loginUser);

@@ -127,7 +127,11 @@ export class CapituloAddComponent implements OnInit {
       },
       source: {
         url: GLOBAL.url + 'capitulos/' + this.asignatura_id,
-        cache: false
+        cache: false,
+        headers: {
+          'Content-Type':'application/json',
+          'Authorization': this.token
+        }
       },
       postProcess: function(event, data){
         data.result = convertData(data.response);
@@ -209,21 +213,6 @@ export class CapituloAddComponent implements OnInit {
       }
     }); //end click anyadirHijo
 
-    /*
-    $("#eliminarNodo").click(function () {
-      if (confirm('¿Está seguro de eliminar el nodo seleccionado?')) {
-        var node = $("#tree").fancytree("getActiveNode");
-        node.remove();
-      }
-    });
-    */
-    $("#eliminarHijos").click(function () {
-      if (confirm('¿Está seguro de eliminar los hijos del nodo seleccionado?')) {
-        var node = $("#tree").fancytree("getActiveNode");
-        node.removeChildren();
-      }
-    });
-
     $(document).on('click', '#tree', () => {
       this.zone.run(() => {
         let node_prov = $("#tree").fancytree("getActiveNode");
@@ -261,7 +250,7 @@ export class CapituloAddComponent implements OnInit {
       
       if(this.capitulo._id){
 
-        this._capituloService.updateCapitulo(this.capitulo._id, this.capitulo).subscribe(
+        this._capituloService.updateCapitulo(this.token, this.capitulo._id, this.capitulo).subscribe(
           response => {
             if (!response.capitulo) {
               this.alertMessage = 'Error en el servidor';
@@ -281,7 +270,7 @@ export class CapituloAddComponent implements OnInit {
 
       else{
         
-        this._capituloService.addCapitulo(this.capitulo).subscribe(
+        this._capituloService.addCapitulo(this.token, this.capitulo).subscribe(
           response => {
             if (!response.capitulo) {
               this.alertMessage = 'Error en el servidor';
@@ -304,26 +293,101 @@ export class CapituloAddComponent implements OnInit {
   public eliminarNodo(){
     let node_prov = $("#tree").fancytree("getActiveNode");
 
-    if(node_prov.data._id){
-      this._capituloService.deleteCapitulo(node_prov.data._id).subscribe(
-        response => {
-          if (!response.capitulo){
-            this.alertMessage = 'Error en el servidor';
-          }
-          else{
-            this.alertMessage = 'El nodo se ha eliminado correctamente';
-            reloadFT();
-          }
-        },
-        error => {
+    if(node_prov){
 
+      if (confirm('¿Está seguro de eliminar el nodo seleccionado?')) {
+
+        if(node_prov.data._id){
+          this._capituloService.deleteCapitulo(this.token, node_prov.data._id).subscribe(
+            response => {
+              if (!response.capitulo){
+                this.alertMessage = 'Error en el servidor';
+              }
+              else{
+                this.alertMessage = 'El nodo se ha eliminado correctamente';
+                reloadFT();
+              }
+            },
+            error => {
+
+            }
+          );
+        } //end if
+        else{
+          node_prov.remove();
         }
-      );
-    } //end if
-    else{
-      node_prov.remove();
+      }
     }
-  } // end eliminarNodo()
+    else{
+      alert('Para eliminar un nodo, por favor, selecciónelo primero');
+    }
+  } // end eliminarNodoeHijos()
+
+  public eliminarNodoeHijos(){
+    let node_prov = $("#tree").fancytree("getActiveNode");
+
+    if(node_prov){
+
+      if (confirm('¿Está seguro de eliminar el nodo seleccionado?')) {
+
+        if(node_prov.data._id){
+          this._capituloService.deleteCapituloeHijos(this.token, node_prov.data._id).subscribe(
+            response => {
+              if (!response.capitulo){
+                this.alertMessage = 'Error en el servidor';
+              }
+              else{
+                this.alertMessage = 'El nodo se ha eliminado correctamente';
+                reloadFT();
+              }
+            },
+            error => {
+
+            }
+          );
+        } //end if
+        else{
+          node_prov.remove();
+        }
+      }
+    }
+    else{
+      alert('Para eliminar un nodo, por favor, selecciónelo primero');
+    }
+  } // end eliminarNodoeHijos()
+
+  public eliminarHijos(){
+    let node_prov = $("#tree").fancytree("getActiveNode");
+
+    if(node_prov){
+
+      if (confirm('¿Está seguro de eliminar los hijos del nodo seleccionado?')) {
+
+        if(node_prov.data._id){
+          this._capituloService.deleteHijos(this.token, node_prov.data._id).subscribe(
+            response => {
+              if (!response.capitulo){
+                this.alertMessage = 'Error en el servidor';
+              }
+              else{
+                this.alertMessage = 'Los hijos se han eliminado correctamente';
+                reloadFT();
+              }
+            },
+            error => {
+
+            }
+          );
+        } //end if nodo guardado en BBDD
+        else{
+          node_prov.removeChildren();
+        }
+      }
+    } // end if confirm eliminar
+    else{
+      alert('Para eliminar los hijos de un nodo, por favor, selecciónelo primero');
+    }
+  } // end eliminarHijos()
 
   public anyadirEtiqueta(etiqueta){
     let node_prov = $("#tree").fancytree("getActiveNode");

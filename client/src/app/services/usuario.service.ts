@@ -35,6 +35,7 @@ export class UsuarioService{
                          .map(res => res.json());
     }
 
+    /*
     actualizarUsuario(usuarioActualizar){
         let params = JSON.stringify(usuarioActualizar);
         let headers = new Headers({
@@ -46,7 +47,8 @@ export class UsuarioService{
             params, {headers: headers})
                          .map(res => res.json());
     }
-
+    */
+   
     getIdentidad(){
         let identidad = JSON.parse(localStorage.getItem('identidad'));
 

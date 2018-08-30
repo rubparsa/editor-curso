@@ -11,7 +11,7 @@ function getAsignatura(req, res){
     
     var asignaturaId = req.params.id;
 
-    Asignatura.find({codigo: asignaturaId}).exec((err, asignatura) => {
+    Asignatura.findOne({codigo: asignaturaId}).exec((err, asignatura) => {
         if(err){
             res.status(500).send({message: 'Error en la petición'});
         }
@@ -54,13 +54,33 @@ function getAsignaturas(req, res){
     });
 }
 
+function updateAsignatura(req, res){
+    var asignaturaId = req.params.id;
+    var update = req.body;
+    console.log(update);
+
+    Asignatura.findByIdAndUpdate(asignaturaId, update, {new: true}, (err, asignaturaUpdated) => {
+        if(err){
+            res.status(500).send({message: 'Error en el servidor'});
+        }
+        else{
+            if(!asignaturaUpdated){
+                res.status(404).send({message: 'No se ha actualizado el contenido de la asignatura'});
+            }
+            else{
+                res.status(200).send({asignatura: asignaturaUpdated});
+            }
+        }
+    });
+}
+
 function addEtiqueta(req, res){
     var asignaturaId = req.params.id;
     var nuevaEtiqueta = req.body.etiqueta;
 
     Asignatura.findByIdAndUpdate(asignaturaId, {$push: {etiquetas: nuevaEtiqueta}}, {new: true}, (err, asignaturaUpdated) => {
         if(err){
-            res.status(500).send({message: 'Error al añadir la etiqueta'});
+            res.status(500).send({message: 'Error en el servidor'});
         }
         else{
             if(!asignaturaUpdated){
@@ -76,5 +96,6 @@ function addEtiqueta(req, res){
 module.exports = {
     getAsignatura,
     getAsignaturas,
+    updateAsignatura,
     addEtiqueta
 }

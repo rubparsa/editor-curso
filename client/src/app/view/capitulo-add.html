@@ -3,7 +3,8 @@
   <button id="anyadirNodo" type="button" class="btn btn-primary">Añadir nodo</button>
   <button id="anyadirHijo" type="button" class="btn btn-primary">Añadir hijo</button>
   <button (click)="eliminarNodo()" id="eliminarNodo" type="button" class="btn btn-primary">Eliminar nodo</button>
-  <button id="eliminarHijos" type="button" class="btn btn-primary">Eliminar hijos</button>
+  <button (click)="eliminarNodoeHijos()" id="eliminarNodoeHijos" type="button" class="btn btn-primary">Eliminar nodo e hijos</button>
+  <button (click)="eliminarHijos()" id="eliminarHijos" type="button" class="btn btn-primary">Eliminar hijos</button>
 </p>
 <!-- Define the targel element for the tree -->
 <form id="formulario" #formAlbum="ngForm" (ngSubmit)="onSubmit(etiqueta.value)" class="col-lg-12">

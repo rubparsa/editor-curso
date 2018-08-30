@@ -95,7 +95,38 @@ function deleteCapitulo(req, res){
             }
             else{
 
-            Capitulo.find({parent:capituloRemoved._id}).remove((err, contenidoHijoRemoved) =>{
+                Capitulo.update({parent: capituloRemoved._id}, {parent: ""}, {'multi': true}, (err,contenidoHijoUpdated) => {
+                    if(err){
+                        res.status(500).send({message: 'Error al actualizar el/los hijo/s'});
+                    }
+                    else{
+                        if(!contenidoHijoUpdated){
+                            res.status(404).send({message: 'El/Los hijo/s no ha/n sido actualizado/s'});
+                        }
+                        else{
+                            res.status(200).send({capitulo: capituloRemoved});
+                        }
+                    }
+                });
+            }
+        }
+    });
+}
+
+function deleteCapituloeHijos(req, res){
+    var capituloId = req.params.id;
+
+    Capitulo.findByIdAndRemove(capituloId, (err, capituloRemoved) => {
+        if(err){
+            res.status(500).send({message: 'Error al eliminar el capítulo'});
+        }
+        else{
+            if(!capituloRemoved){
+                res.status(404).send({message: 'El capítulo no ha sido eliminado'});
+            }
+            else{
+
+            Capitulo.find({parent: capituloRemoved._id}).remove((err, contenidoHijoRemoved) => {
                 if(err){
                     res.status(500).send({message: 'Error al eliminar el/los hijo/s'});
                 }
@@ -113,19 +144,28 @@ function deleteCapitulo(req, res){
     });
 }
 
+function deleteHijos(req, res){
+    var ObjectId = require('mongoose').Types.ObjectId;
+    var capituloId = req.params.id; 
+
+    Capitulo.find({parent: new ObjectId(capituloId)}).remove((err, hijosRemoved) =>{
+        if(err){
+            res.status(500).send({message: 'Error al eliminar el/los hijo/s'});
+        }
+        else{
+            if(!hijosRemoved){
+                res.status(404).send({message: 'El/Los hijo/s no ha/n sido eliminado/s'});
+            }
+            else{
+                res.status(200).send({capitulo: hijosRemoved});
+            }
+        }
+    }); 
+}
+
 function addEtiqueta(req, res){
     var capituloId = req.params.id;
     var nuevaEtiqueta = req.body.etiqueta;
-
-    /*
-    //var params = req.body;
-    const util = require('util');
-    console.log("Req: " + util.inspect(req, false, null));
-    console.log("Req Body: " + util.inspect(req.body, false, null));
-    console.log("Body Etiq: " + req.body.etiqueta);
-    console.log("Etiq: " + req.etiqueta);
-    console.log("ReqEtiq: " + req.params.etiqueta);
-    */
 
     Capitulo.findByIdAndUpdate(capituloId, {$push: {etiquetas: nuevaEtiqueta}}, {new: true}, (err, capituloUpdated) => {
         if(err){
@@ -148,5 +188,7 @@ module.exports = {
     addCapitulo,
     updateCapitulo,
     deleteCapitulo,
+    deleteCapituloeHijos,
+    deleteHijos,
     addEtiqueta
 }

@@ -13,34 +13,61 @@ export class CapituloService{
         this.url = GLOBAL.url;
     }
 
-    addCapitulo(contenido: Capitulo){
+    addCapitulo(token, contenido: Capitulo){
         let params = JSON.stringify(contenido);
         let headers = new Headers({
-            'Content-Type': 'application/json'
+            'Content-Type': 'application/json',
+            'Authorization': token
         });
 
         return this._http.post(this.url+'capitulo', params, {headers: headers})
                          .map(res => res.json());
     }
 
-    updateCapitulo(id:string, contenido: Capitulo){
+    updateCapitulo(token, id:string, contenido: Capitulo){
         let params = JSON.stringify(contenido);
         let headers = new Headers({
-            'Content-Type': 'application/json'
+            'Content-Type': 'application/json',
+            'Authorization': token
         });
 
         return this._http.put(this.url+'capitulo/'+id, params, {headers: headers})
                          .map(res => res.json());
     }
 
-    deleteCapitulo(id: string){
+    deleteCapitulo(token, id: string){
         let headers = new Headers({
-            'Content-Type': 'application/json'
+            'Content-Type': 'application/json',
+            'Authorization': token
         });
 
         let options = new RequestOptions({headers:headers});
 
         return this._http.delete(this.url+'capitulo/'+id, options)
+                         .map(res => res.json());
+    }
+
+    deleteCapituloeHijos(token, id: string){
+        let headers = new Headers({
+            'Content-Type': 'application/json',
+            'Authorization': token
+        });
+
+        let options = new RequestOptions({headers:headers});
+
+        return this._http.delete(this.url+'capituloeHijos/'+id, options)
+                         .map(res => res.json());
+    }
+
+    deleteHijos(token, id: string){
+        let headers = new Headers({
+            'Content-Type': 'application/json',
+            'Authorization': token
+        });
+
+        let options = new RequestOptions({headers:headers});
+
+        return this._http.delete(this.url+'contenidoHijos/'+id, options)
                          .map(res => res.json());
     }
 

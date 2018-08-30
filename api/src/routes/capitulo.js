@@ -10,11 +10,13 @@ var md_auth = require('../middlewares/authenticated');
 //var md_upload = multipart({ uploadDir: './uploads/users' });
 
 //api.get('/probando', CapituloController.pruebas);
-api.get('/capitulos/:asignatura?', CapituloController.getCapitulos);
+api.get('/capitulos/:asignatura?', md_auth.ensureAuth, CapituloController.getCapitulos);
 //api.get('capitulos/:asignatura', CapituloController.getCapitulosAsignatura);
-api.post('/capitulo', CapituloController.addCapitulo);
-api.put('/capitulo/:id', CapituloController.updateCapitulo);
-api.delete('/capitulo/:id', CapituloController.deleteCapitulo);
+api.post('/capitulo', md_auth.ensureAuth, CapituloController.addCapitulo);
+api.put('/capitulo/:id', md_auth.ensureAuth, CapituloController.updateCapitulo);
+api.delete('/capitulo/:id', md_auth.ensureAuth, CapituloController.deleteCapitulo);
+api.delete('/capituloeHijos/:id', md_auth.ensureAuth, CapituloController.deleteCapituloeHijos);
+api.delete('/contenidoHijos/:id', md_auth.ensureAuth, CapituloController.deleteHijos);
 api.put('/etiqueta/:id', md_auth.ensureAuth, CapituloController.addEtiqueta);
 //api.post('/login', UserController.loginUser);
 //api.put('/update-user/:id', md_auth.ensureAuth, UserController.updateUser);

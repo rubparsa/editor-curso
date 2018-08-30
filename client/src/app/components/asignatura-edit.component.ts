@@ -34,8 +34,6 @@ export class AsignaturaEditComponent implements OnInit {
 
     // Sacar asignatura de la BBDD
     this.getAsignatura();
-    
-    //console.log(this.asignatura);
 
   } //fin onInit
 
@@ -50,7 +48,7 @@ export class AsignaturaEditComponent implements OnInit {
             }
             else{
                 this.asignatura = response.asignatura;
-                console.log(this.asignatura);
+                //console.log(this.asignatura);
             }
         },
         error => {
@@ -66,71 +64,31 @@ export class AsignaturaEditComponent implements OnInit {
   }
 
   public onSubmit(etiqueta){
-    /*
+    
     this._route.params.forEach((params: Params) => {
 
+        if(this.asignatura.etiquetas){
+            this.asignatura.etiquetas.push(etiqueta);
+          }
+          else{
+            this.asignatura.etiquetas = etiqueta;
+          }
 
-      let node_prov = $("#tree").fancytree("getActiveNode");
-      let nombre_prov = node_prov.title;
-      this.capitulo.title = nombre_prov;
-      this.capitulo.asignatura = this.asignatura_id;
-      this.capitulo._id = node_prov.data._id;
-      if(this.capitulo.etiquetas){
-        this.capitulo.etiquetas.push(etiqueta);
-      }
-      else{
-        this.capitulo.etiquetas = etiqueta;
-      }
-
-      if(node_prov.getLevel() == 2){
-        this.capitulo.parent = node_prov.getParent().data._id;
-      }
-      else{
-        this.capitulo.parent = '';
-      }
-      console.log(this.capitulo);
-      
-      if(this.capitulo._id){
-
-        this._capituloService.updateCapitulo(this.capitulo._id, this.capitulo).subscribe(
+        this._asignaturaService.updateAsignatura(this.token, this.asignatura._id, this.asignatura).subscribe(
           response => {
-            if (!response.capitulo) {
+            if (!response.asignatura) {
               this.alertMessage = 'Error en el servidor';
             }
             else {
-              this.alertMessage = 'El capítulo se ha editado correctamente';
-              this.capitulo = response.capitulo;
-              reloadFT();
-              //this._router.navigate(['/editar-album', response.album._id]);
+              this.alertMessage = 'La asignatura se ha editado correctamente';
+              this.asignatura = response.asignatura;
             }
           },
           error => {
 
           }
         );
-      } // end if
-
-      else{
-        
-        this._capituloService.addCapitulo(this.capitulo).subscribe(
-          response => {
-            if (!response.capitulo) {
-              this.alertMessage = 'Error en el servidor';
-            }
-            else {
-              this.alertMessage = 'El capítulo se ha creado correctamente';
-              this.capitulo = response.capitulo;
-              reloadFT();
-              //this._router.navigate(['/editar-album', response.album._id]);
-            }
-          },
-          error => {
-
-          }
-        );
-      } //end else
     });
-    */
   } // end onSubmit
 
     public anyadirEtiqueta(etiqueta) {

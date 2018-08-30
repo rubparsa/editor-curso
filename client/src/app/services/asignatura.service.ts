@@ -39,8 +39,19 @@ export class AsignaturaService{
         }
         else{
             return this._http.get(this.url+'asignaturas/'+estudioId, options)
-            .map(res => res.json());
+                         .map(res => res.json());
         }
+    }
+
+    updateAsignatura(token, id: string, asignatura: Asignatura ){
+        let params = JSON.stringify(asignatura);
+        let headers = new Headers({
+            'Content-Type': 'application/json',
+            'Authorization': token
+        });
+
+        return this._http.put(this.url+'asignatura/'+id, params, {headers: headers})
+                         .map(res => res.json());
     }
 
     addEtiqueta(token, id:string, etiqueta: string){

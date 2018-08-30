@@ -11,6 +11,6 @@ var md_auth = require('../middlewares/authenticated');
 
 api.post('/registro', UsuarioController.guardarUsuario);
 api.post('/login', UsuarioController.loginUsuario);
-api.put('/actualizar-usuario/:id', md_auth.ensureAuth, UsuarioController.actualizarUsuario);
+//api.put('/actualizar-usuario/:id', md_auth.ensureAuth, UsuarioController.actualizarUsuario);
 
 module.exports = api;
