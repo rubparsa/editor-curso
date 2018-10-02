@@ -21,6 +21,7 @@ declare function reloadFT(): any;
 export class CapituloAddComponent implements OnInit {
   public titulo: string;
   public capitulo: Capitulo;
+  public asignatura: Asignatura;
   public alertMessage;
   public asignatura_id: string;
   public nombreAsignatura: string;
@@ -39,23 +40,20 @@ export class CapituloAddComponent implements OnInit {
     private _capituloService: CapituloService,
     private _usuarioService: UsuarioService,
     private _asignaturaService: AsignaturaService,
-    //private renderer2: Renderer2,
-    //private elementRef: ElementRef,
     private zone: NgZone
   ){
     
     this.capitulo = new Capitulo('','','',[],'','', [], 2);
+    this.asignatura = new Asignatura('','', '', '', [], '', '', 2018, 0, 0, 0, '');
     this.asignatura_id = this._route.snapshot.paramMap.get('asignatura');
     this.identidad = this._usuarioService.getIdentidad();
     this.token = this._usuarioService.getToken();
-    console.log(this.token);
-    //this.nombreAsignatura = String(this._asignaturaService.getNombreAsignatura(this.token, this.asignatura_id));
     this.titulo = 'Gestor de contenido';
-    //console.log(this._asignaturaService.getNombreAsignatura(this.token, this.asignatura_id));
-    //const componente = this;
   }
 
   ngOnInit(){
+
+    this.getAsignatura();
      
     $('#tree').fancytree({
 
@@ -222,6 +220,29 @@ export class CapituloAddComponent implements OnInit {
     });
 
   } //fin onInit
+
+  public getAsignatura(){
+
+    this._asignaturaService.getAsignatura(this.token, this.asignatura_id).subscribe(
+        response => {
+            if(!response.asignatura){
+                this._router.navigate(['/']);
+            }
+            else{
+                this.asignatura = response.asignatura;
+            }
+        },
+        error => {
+            var errorMessage = <any>error;
+
+            if(errorMessage != null){
+                var body = JSON.parse(error._body);
+                this.alertMessage = body.message;
+            }
+        }
+    );
+
+  }
 
   public onSubmit(etiqueta){
     

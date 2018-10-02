@@ -6,7 +6,6 @@ var bodyParser = require('body-parser');
 var app = express();
 
 //cargar rutas
-
 var capitulo_routes = require('./src/routes/capitulo');
 var asignatura_routes = require('./src/routes/asignatura');
 var asigProfesor_routes = require('./src/routes/asigProfesor');
@@ -16,11 +15,8 @@ var tipoEstudio_routes = require('./src/routes/tipoEstudio');
 
 app.use(bodyParser.urlencoded({extended:false}));
 app.use(bodyParser.json());
-//app.use(bodyParser.text());
-//app.use(bodyParser.raw());
 
 // configurar cabeceras http
-
 app.use((req, res, next) => {
     res.header('Access-Control-Allow-Origin', '*');
     res.header('Access-Control-Allow-Headers', 'X-API-KEY, Origin, X-Requested-With, Content-Type, Accept, Access-Control-Allow-Request-Method');
@@ -32,7 +28,6 @@ app.use((req, res, next) => {
 });
 
 //rutas base
-
 app.use('/api', capitulo_routes);
 app.use('/api', asignatura_routes);
 app.use('/api', asigProfesor_routes);

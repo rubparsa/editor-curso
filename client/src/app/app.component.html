@@ -7,20 +7,10 @@
         Inicio
       </a>
     </h1>
-    <nav id="navigation">
-      <a href="#">
-        <span class="glyphicon glyphicon-search" aria-hidden="true"></span>
-        Buscar
-      </a>
-    </nav>
     <nav id="user_logged">
       <span id="identity_name">
         {{identidad.nombre}} {{identidad.apellidos}}
       </span>
-      <a href="#">
-        <span class="glyphicon glyphicon-cog" aria-hidden="true"></span>
-        Mis datos
-      </a>
       <a (click)="logout()" class="btn-logout">
         <span class="glyphicon glyphicon-log-out" aria-hidden="true"></span>
         Salir
@@ -28,11 +18,14 @@
     </nav>
   </div>
 
-  <div *ngIf="identidad" class="central col-lg-12">
+  <div *ngIf="identidad && token" class="central col-lg-12">
     <router-outlet></router-outlet>
   </div>
 
   <div *ngIf="!identidad" class="row col-lg-12" >
+    <div class="col-lg-12">
+      <h1>{{titulo}}</h1>
+    </div>
       <div class="col-lg-6">
         <h1>Identifíquese</h1>
         <div *ngIf="errorMessage">

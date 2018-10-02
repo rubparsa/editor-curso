@@ -1,6 +1,4 @@
 'use strict'
-var fs = require('fs');
-var path = require('path');
 var bcrypt = require('bcrypt-nodejs');
 var Usuario = require('../model/usuario');
 var jwt = require('../services/jwt');
@@ -84,31 +82,6 @@ function loginUsuario(req, res){
         }
     })
 }
-
-/*
-function actualizarUsuario(req, res){
-    var usuarioId = req.params.id;
-    var update = req.body;
-
-    if(usuarioId != req.usuario._id){
-        return res.status(500).send({message: 'No tienes permiso para actualizar este usuario'});
-    }
-
-    Usuario.findByIdAndUpdate(usuarioId, update, (err, usuarioUpdated) => {
-        if(err){
-            res.status(500).send({message: 'Error al actualizar el usuario'});
-        }
-        else{
-            if(!usuarioUpdated){
-                res.status(404).send({message: 'No se ha podido actualizar el usuario'});
-            }
-            else{
-                res.status(200).send({user: usuarioUpdated});
-            }
-        }
-    });
-}
-*/
 
 module.exports = {
     guardarUsuario,

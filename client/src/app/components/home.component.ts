@@ -41,12 +41,15 @@ export class HomeComponent implements OnInit{
         private _estudioService: EstudioService
     ){
         this.titulo = '';
+        this.url = GLOBAL.url;
         this.identidad = this._usuarioService.getIdentidad();
         this.token = this._usuarioService.getToken();
-        this.url = GLOBAL.url;
     }
 
     ngOnInit(){
+
+        //this.identidad = this._usuarioService.getIdentidad();
+        //this.token = this._usuarioService.getToken();
 
         if(this.identidad.rol == 'admin'){
             this.getTipoEstudio();
@@ -54,6 +57,7 @@ export class HomeComponent implements OnInit{
         else if(this.identidad.rol == 'profesor') {
             this.getAsignaturasProfesor();
         }
+        
     }
 
     logout(){
@@ -141,11 +145,14 @@ export class HomeComponent implements OnInit{
     updateTipoEstudioSelected($event){
         this.tipoEstudioSelected = $event;
         this.getEstudios();
+        this.arrayAsignaturas = null;
+        this.asignaturaSelected = null;
     }
 
     updateEstudioSelected($event){
         this.estudioSelected = $event;
         this.getAsignaturas();
+        this.asignaturaSelected = null;
     }
 
     getAsignaturasProfesor(){
@@ -156,7 +163,6 @@ export class HomeComponent implements OnInit{
                 }
                 else{
                     this.arrayAsignaturas = response.asignaturasProfesor;
-                    console.log(this.arrayAsignaturas);
                 }
             },
             error => {

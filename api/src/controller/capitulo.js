@@ -1,8 +1,6 @@
 'use strict'
 
 var path = require('path');
-//var fs = require('fs');
-//var mongoosePaginate = require('mongoose-pagination');
 
 var Capitulo = require('../model/capitulo');
 var Asignatura = require('../model/asignatura');
@@ -45,8 +43,6 @@ function addCapitulo(req, res){
     capitulo.parent = params.parent;
     capitulo.children = [];
     capitulo.key = 1;
-
-    //console.log(capitulo.etiquetas);
 
     capitulo.save((err, capituloStored) => {
         if(err){
@@ -176,7 +172,6 @@ function addEtiqueta(req, res){
                 res.status(404).send({message: 'No se ha añadido la etiqueta'});
             }
             else{
-                //res.status(200);
                 res.status(200).send({capitulo: capituloUpdated});
             }
         }

@@ -26,8 +26,11 @@
             <option *ngFor="let asig of arrayAsignaturas" [ngValue]="asig.codigo">{{asig.nombre}}</option>
         </select>
         <br><br>
-        <a class="btn btn-primary btn-lg" [routerLink]="['/crear-capitulo/', this.asignaturaSelected]" role="button">
-            Ir
+        <a *ngIf="this.asignaturaSelected" class="btn btn-primary btn-lg" [routerLink]="['/editar-asignatura/', this.asignaturaSelected]" role="button">
+            Ir a asignatura
+        </a>
+        <a *ngIf="this.asignaturaSelected" class="btn btn-primary btn-lg" [routerLink]="['/crear-capitulo/', this.asignaturaSelected]" role="button">
+            Ir a contenido
         </a>
     </div>
 

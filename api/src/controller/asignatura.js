@@ -1,8 +1,6 @@
 'use strict'
 
 var path = require('path');
-//var fs = require('fs');
-//var mongoosePaginate = require('mongoose-pagination');
 
 var Asignatura = require('../model/asignatura');
 var Estudio = require('../model/estudio');

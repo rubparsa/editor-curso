@@ -9,9 +9,7 @@ var UsuarioSchema = Schema({
         email: String,
         password: String,
         departamento: String,
-        //departamento: { type: Schema.ObjectId, ref: 'Departamento' },
         facultad: String,
-        //facultad: { type: Schema.ObjectId, ref: 'Facultad' },
         rol: String
 });
 

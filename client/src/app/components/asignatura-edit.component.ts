@@ -26,7 +26,6 @@ export class AsignaturaEditComponent implements OnInit {
     this.asignatura = new Asignatura('','', '', '', [], '', '', 2018, 0, 0, 0, '');
     this.identidad = this._usuarioService.getIdentidad();
     this.token = this._usuarioService.getToken();
-    console.log(this.token);
     this.titulo = 'Editar ';
   }
 
@@ -48,7 +47,6 @@ export class AsignaturaEditComponent implements OnInit {
             }
             else{
                 this.asignatura = response.asignatura;
-                //console.log(this.asignatura);
             }
         },
         error => {

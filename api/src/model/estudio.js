@@ -7,9 +7,7 @@ var EstudioSchema = Schema({
         codigo: Number,
         nombre: String,
         facultad: String,
-        //facultad: { type: Schema.ObjectId, ref: 'Facultad'},
         area: String,
-        //tipoEstudio: String
         tipoEstudio: { type: Schema.ObjectId, ref: 'TipoEstudio'},
 });
 

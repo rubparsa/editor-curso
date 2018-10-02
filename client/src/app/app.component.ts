@@ -3,7 +3,6 @@ import { Router, ActivatedRoute, Params, Routes, RouterModule } from '@angular/r
 
 import { UsuarioService } from './services/usuario.service';
 import { Usuario } from './model/usuario';
-import { GLOBAL } from './services/global';
 
 @Component({
   selector: 'app-root',
@@ -61,9 +60,6 @@ export class AppComponent implements OnInit {
                 // Crear elemento en el localstorage para tener al usuario en sesión
                 localStorage.setItem('token', token);
                 this.usuario = new Usuario('','','','','','','', '');
-
-                // Conseguir el token para enviárselo a cada petición http
-                
               }
             },
             error => {
